@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environment
+venv/
+env/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# VS Code workspace and settings
+.vscode/
+
+# macOS and Linux system files
+.DS_Store
+*.swp
+
+# Environment variables file
+.env
+
+# Logs
+*.log
+
+# Ignore all `.pytest_cache` files and directories (if using pytest)
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+*.coverage
+
+# Python egg files
+*.egg-info/
+.eggs/
+
+# MyPy cache
+.mypy_cache/
+
+# PyCharm files
+.idea/
+
+# Output folders
+dist/
+build/
+
+# Any additional local configuration files (add as necessary)
