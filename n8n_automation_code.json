@@ -1,0 +1,208 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "model": "=llama3.2:latest",
+        "options": {}
+      },
+      "id": "943a033c-be9f-4a87-9bad-f65a455dcfbe",
+      "name": "Ollama Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        480
+      ],
+      "notesInFlow": false,
+      "credentials": {
+        "ollamaApi": {
+          "id": "2S64CWMc6HX7ehv4",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "f12f24c8-f1d0-440a-a1df-014f8ae3d4b8",
+      "name": "Postgres Chat Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.1,
+      "position": [
+        1160,
+        500
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "83i8tozCDwCaui4G",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "86c0924d-cc02-4660-bd50-6c3fee3cb2ea",
+      "name": "Financial Analyst",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        1040,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "e2769e18-122b-45c6-8c79-4ffead77df1d",
+      "name": "SerpAPI",
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        540
+      ],
+      "credentials": {
+        "serpApi": {
+          "id": "aIebXo5IqMmibW3e",
+          "name": "SerpAPI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "llama3.2:latest",
+        "options": {}
+      },
+      "id": "8678da55-7dd5-420d-b4d0-4f3504304a78",
+      "name": "Ollama Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        500
+      ],
+      "credentials": {
+        "ollamaApi": {
+          "id": "2S64CWMc6HX7ehv4",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.output }}",
+        "options": {
+          "systemMessage": "You are a financial insights agent. Your role is to gather detailed financial information from the user, analyze it thoroughly, and provide both a comprehensive summary and actionable insights. Focus on the user's key data points, identify trends, highlight opportunities, and offer recommendations where relevant. Ensure clarity and accuracy in your summaries, breaking down complex financial information into simple, understandable insights tailored to the user's needs."
+        }
+      },
+      "id": "22b0970b-aaed-468a-8708-81ad0a49bdb7",
+      "name": "Fin Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        1420,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi there! 👋\n\nMy name is Nathan, and I'm a financial analyst. How can I assist you today? Let me know which company you're interested in, and I can provide you with detailed financial information and insights.\n\n",
+        "options": {}
+      },
+      "id": "8d76af9d-3d83-4eae-a914-25c42227cf45",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        820,
+        360
+      ],
+      "webhookId": "198048b7-4673-49a1-bbf5-5376b6967a77"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Financial Analyst",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Financial Analyst",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "Financial Analyst",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Financial Analyst": {
+      "main": [
+        [
+          {
+            "node": "Fin Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Fin Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Financial Analyst",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c90851fa-de67-47cc-9c3a-2b2166fcf4b0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "6241a2ce16180f41b5ed7ee38a5fe7ef421f94e02c5d885cb7e4541add07123e"
+  },
+  "id": "In0KI70LbdMqXOxy",
+  "tags": []
+}
